@@ -1,6 +1,6 @@
 # Batch docker image python example
 
-This is a template for a docker-based batch job on the Extra Horizon platform. It just prints "Hello world!" and exits :)
+This is a template for a docker-based batch job on the Extra Horizon platform. It fetches the user linked to the credentials provided to the batch job, to showcase communication with the platform.
 
 However, there are a few steps that need to be done in order to achieve this result:
 
