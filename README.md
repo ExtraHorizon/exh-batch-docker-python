@@ -1,6 +1,47 @@
 # Batch docker image python example
 
-This is a template for a docker-based batch job on the Extra Horizon platform. It fetches the user linked to the credentials provided to the batch job, to showcase communication with the platform.
+**TODO:** describe what the task does
+
+**TODO:** describe the setup
+
+**TODO:** full deployed test: For example to validate the `data` directory does not need to exist? Replace `data` dir w/ `tmp` dir? 
+
+**TODO:** describe the schema below with a few words
+
+```jsonc
+{
+  // ... The rest of the schema
+  "statuses": {
+    "start": {},
+    "processed": {}
+  },
+  "transitions": [
+      {
+        "id": "667446c89bfa72f387c72325",
+        "name": "submit_result",
+        "type": "manual",
+        "fromStatuses": [
+          "start",
+          "processed"
+        ],
+        "toStatus": "processed"
+      }
+  ],
+  "properties": {
+    "rawDataFileToken": {
+      "type": "string"
+    },
+    "processedDataFileToken": {
+      "type": "string"
+    },
+    "result": {
+      "type": "number"
+    }
+  }
+
+}
+```
+
 
 However, there are a few steps that need to be done in order to achieve this result:
 
@@ -29,7 +70,7 @@ After installing, use `aws configure` to set the `AWS Access Key Id` and `AWS Se
 Once `aws` is set up correctly, use it to authenticate against the docker registry. This is explained [here](https://docs.aws.amazon.com/AmazonECR/latest/userguide/registry_auth.html), but the easiest is probably to do
 
 ```sh
-aws ecr get-login-password --region region | docker login --username AWS --password-stdin <registry-url>
+aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <registry-url>
 ```
 
 ## 🚚 Sending the docker image to the register
@@ -57,14 +98,14 @@ oAuth1Client = OAuth1Session(
     resource_owner_secret='<your Extra Horizon token secret>'
 )
 
-# Normally the development URL will how the form of something like: api.dev.xxx
+# Normally the development URL will have the form of something like: api.dev.xxx.extrahorizon.io
 result = oAuth1Client.post(
   'https://<your development url>/tasks/v1/functions/<your function name>/execute', 
-  json={
-        "data":{
-            "schemaId": "<your schema id>",
-            "documentId": "<your document id>",
-        }
+  json = {
+    "data": {
+      "schemaId": "<your schema id>",
+      "documentId": "<your document id>",
+    }
   }
 )
 
